@@ -133,8 +133,16 @@ class ProductGenerator {
             $product->set_tag_ids($this->product_tags);
         }
 
+        // Randomize featured product status
         if ($this->featured_product) {
-            $product->set_featured(true);
+            // Set 30% chance for the product to be featured
+            if (rand(1, 100) <= 30) {
+                $product->set_featured(true);
+                $this->logger->log_info("Product $product_number: Set as featured.");
+            } else {
+                $product->set_featured(false);
+                $this->logger->log_info("Product $product_number: Not set as featured.");
+            }
         }
 
         $product->set_weight(rand(1, 50));
